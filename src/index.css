@@ -1,0 +1,86 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  body {
+    background-color: #090a0f;
+    color: #f1f5f9;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+
+  /* Emil Kowalski rule: tabular numbers for counts, metrics, dates */
+  .tabular-nums {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+@layer utilities {
+  /* Tactile click compression */
+  .tap-scale {
+    transition: transform 100ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .tap-scale:active {
+    transform: scale(0.97);
+  }
+
+  /* Min 44x44px hit-target for mobile accessibility */
+  .hit-target {
+    position: relative;
+  }
+  .hit-target::before {
+    content: '';
+    position: absolute;
+    inset: -8px;
+    z-index: 10;
+  }
+
+  /* Glassmorphism subtle surface */
+  .glass-surface {
+    background: rgba(17, 19, 26, 0.75);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .glass-surface-hover {
+    transition: all 200ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .glass-surface-hover:hover {
+    background: rgba(24, 27, 36, 0.85);
+    border-color: rgba(255, 255, 255, 0.16);
+    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+  }
+
+  /* Gradient text */
+  .text-glow {
+    text-shadow: 0 0 32px rgba(0, 245, 160, 0.25);
+  }
+}
+
+/* Custom smooth dark scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #090a0f;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1e222d;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #2a3040;
+}

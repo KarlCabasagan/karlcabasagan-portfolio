@@ -12,6 +12,8 @@ dist
 dist-ssr
 *.local
 *.tsbuildinfo
+.playwright-mcp/
+*.png
 
 # Editor directories and files
 .vscode/*

@@ -31,8 +31,14 @@ export const Footer: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-10">
           {/* Col 1: Bio / Brand */}
           <div className="md:col-span-2">
-            <div className="flex items-center gap-2 mb-3">
-              <span className="font-mono font-bold text-accent-mint text-base">&lt;KC /&gt;</span>
+            <div className="flex items-center gap-3 mb-3">
+              <div className="w-9 h-9 rounded-xl overflow-hidden border border-white/10 shrink-0 bg-surface">
+                <img
+                  src="/1x1-id.jpg"
+                  alt="John Karl Harley A. Cabasagan"
+                  className="w-full h-full object-cover object-top"
+                />
+              </div>
               <span className="text-white font-semibold text-sm">John Karl Harley A. Cabasagan</span>
             </div>
             <p className="text-slate-400 text-xs leading-relaxed max-w-prose mb-4">

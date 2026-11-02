@@ -10,48 +10,80 @@ export const About: React.FC = () => {
     <PageWrapper className="space-y-16">
       {/* Bio / Background Section */}
       <section className="relative">
-        <div className="max-w-3xl">
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.2 }}
-            className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent-mint/10 border border-accent-mint/30 text-xs font-mono text-accent-mint mb-4"
-          >
-            <GraduationCap className="w-3.5 h-3.5" />
-            <span>BSIT • Academic & Practical Mastery</span>
-          </motion.div>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+          <div className="lg:col-span-8">
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.2 }}
+              className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent-mint/10 border border-accent-mint/30 text-xs font-mono text-accent-mint mb-4"
+            >
+              <GraduationCap className="w-3.5 h-3.5" />
+              <span>BSIT • Academic & Practical Mastery</span>
+            </motion.div>
 
-          <motion.h1
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.22, delay: 0.05 }}
-            className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white mb-6"
-          >
-            Engineering scalable systems with mathematical precision and design taste.
-          </motion.h1>
+            <motion.h1
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.22, delay: 0.05 }}
+              className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white mb-6"
+            >
+              Engineering scalable systems with mathematical precision and design taste.
+            </motion.h1>
 
+            <motion.div
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.22, delay: 0.1 }}
+              className="space-y-4 text-slate-300 text-sm sm:text-base leading-relaxed max-w-prose"
+            >
+              <p>
+                I am <strong className="text-white font-semibold">John Karl Harley A. Cabasagan</strong>, 
+                an academically distinguished <strong className="text-white">Cum Laude</strong> graduate in 
+                Bachelor of Science in Information Technology (BSIT) from <strong className="text-white">St. Peter's College</strong> (CGPA: 1.32). 
+                Currently serving as a part-time Academic Instructor at St. Peter's College, I combine deep theoretical foundations with extensive hands-on experience as a Lead Developer across enterprise, academic, and web software applications.
+              </p>
+              <p>
+                My technical proficiency spans full-stack development, backend API design, database management, and cross-institutional software collaboration. 
+                My core stack centers on <strong className="text-white">Laravel (RESTful API Development), PHP, React.js, React with TypeScript, MySQL, Supabase, SQLite, and Firebase</strong>, alongside role-based access control (RBAC) implementations. 
+                I also possess solid systems competencies in <strong className="text-white">Java, Python, C++, and Windows/Linux systems administration</strong>.
+              </p>
+              <p>
+                Beyond development, I have led university student bodies as Year Level Representative and President, 
+                completed a certified 486-hour software engineering industry internship at Multifactors Sales, 
+                and engineered real-world digital automation pipelines in YouTube media workflows, web scraping, and SEO.
+              </p>
+            </motion.div>
+          </div>
+
+          {/* Portrait Card */}
           <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.22, delay: 0.1 }}
-            className="space-y-4 text-slate-300 text-sm sm:text-base leading-relaxed max-w-prose"
+            initial={{ opacity: 0, scale: 0.96 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.25, delay: 0.15 }}
+            className="lg:col-span-4"
           >
-            <p>
-              I am <strong className="text-white font-semibold">John Karl Harley A. Cabasagan</strong>, 
-              an academically distinguished <strong className="text-white">Cum Laude</strong> graduate in 
-              Bachelor of Science in Information Technology (BSIT) from <strong className="text-white">St. Peter's College</strong> (CGPA: 1.32). 
-              Currently serving as a part-time Academic Instructor at St. Peter's College, I combine deep theoretical foundations with extensive hands-on experience as a Lead Developer across enterprise, academic, and web software applications.
-            </p>
-            <p>
-              My technical proficiency spans full-stack development, backend API design, database management, and cross-institutional software collaboration. 
-              My core stack centers on <strong className="text-white">Laravel (RESTful API Development), PHP, React.js, React with TypeScript, MySQL, Supabase, SQLite, and Firebase</strong>, alongside role-based access control (RBAC) implementations. 
-              I also possess solid systems competencies in <strong className="text-white">Java, Python, C++, and Windows/Linux systems administration</strong>.
-            </p>
-            <p>
-              Beyond development, I have led university student bodies as Year Level Representative and President, 
-              completed a certified 486-hour software engineering industry internship at Multifactors Sales, 
-              and engineered real-world digital automation pipelines in YouTube media workflows, web scraping, and SEO.
-            </p>
+            <div className="p-4 rounded-2xl bg-surface/80 border border-white/10 glass-surface relative group">
+              <div className="relative aspect-square rounded-xl overflow-hidden border border-white/10 bg-surface-muted">
+                <img
+                  src="/1x1-id.jpg"
+                  alt="John Karl Harley A. Cabasagan Portrait"
+                  className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
+                <div className="absolute bottom-3 left-3 right-3 text-left">
+                  <span className="text-xs font-semibold text-white block">John Karl Harley A. Cabasagan</span>
+                  <span className="text-[11px] font-mono text-accent-mint block">Cum Laude • BSIT</span>
+                </div>
+              </div>
+              <div className="mt-3 flex items-center justify-between text-[11px] font-mono text-slate-400 px-1">
+                <span className="flex items-center gap-1.5">
+                  <span className="w-2 h-2 rounded-full bg-accent-mint animate-pulse" />
+                  Available for Hire
+                </span>
+                <span>Iligan City, PH</span>
+              </div>
+            </div>
           </motion.div>
         </div>
 

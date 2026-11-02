@@ -55,9 +55,13 @@ export const Navbar: React.FC = () => {
             className="group flex items-center gap-3 text-slate-100 focus:outline-none hit-target"
             aria-label="Karl Cabasagan Portfolio Home"
           >
-            <div className="relative flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-br from-surface to-surface-muted border border-white/10 group-hover:border-accent-mint/50 transition-colors">
-              <span className="font-mono font-bold text-sm text-accent-mint tracking-wider">KC</span>
-              <span className="absolute -top-1 -right-1 flex h-2.5 w-2.5">
+            <div className="relative flex items-center justify-center w-10 h-10 rounded-xl overflow-hidden border border-white/10 group-hover:border-accent-mint/50 transition-colors bg-surface">
+              <img
+                src="/1x1-id.jpg"
+                alt="John Karl Harley A. Cabasagan"
+                className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-200"
+              />
+              <span className="absolute -top-1 -right-1 flex h-2.5 w-2.5 z-10 pointer-events-none">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent-mint opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-accent-mint"></span>
               </span>

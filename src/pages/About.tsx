@@ -38,18 +38,19 @@ export const About: React.FC = () => {
           >
             <p>
               I am <strong className="text-white font-semibold">John Karl Harley A. Cabasagan</strong>, 
-              a Full-Stack Developer with a Bachelor of Science in Information Technology (BSIT). 
-              My engineering philosophy bridges deep backend infrastructure with purposeful, frictionless frontend interfaces.
+              an academically distinguished <strong className="text-white">Cum Laude</strong> graduate in 
+              Bachelor of Science in Information Technology (BSIT) from <strong className="text-white">St. Peter's College</strong> (CGPA: 1.32). 
+              Currently serving as a part-time Academic Instructor at St. Peter's College, I combine deep theoretical foundations with extensive hands-on experience as a Lead Developer across enterprise, academic, and web software applications.
             </p>
             <p>
-              Over my academic and professional journey, I have cultivated a polyglot foundation. 
-              My core backend stack centers on <strong className="text-white">PHP, Laravel, MySQL, PostgreSQL, and Supabase</strong>, 
-              paired with modern type-safe clients using <strong className="text-white">React, TypeScript, Next.js, and Tailwind CSS</strong>. 
-              I also possess hands-on systems literacy in <strong className="text-white">Python, Java, and C++</strong>, enabling me to grasp memory management and algorithmic trade-offs.
+              My technical proficiency spans full-stack development, backend API design, database management, and cross-institutional software collaboration. 
+              My core stack centers on <strong className="text-white">Laravel (RESTful API Development), PHP, React.js, React with TypeScript, MySQL, Supabase, SQLite, and Firebase</strong>, alongside role-based access control (RBAC) implementations. 
+              I also possess solid systems competencies in <strong className="text-white">Java, Python, C++, and Windows/Linux systems administration</strong>.
             </p>
             <p>
-              I believe great software leaves zero room for superficial fluff or sluggish UX. 
-              Every query is indexed, every layout is measured for reading comfort (&lt;65ch), and every interaction has snappy, tactile feedback.
+              Beyond development, I have led university student bodies as Year Level Representative and President, 
+              completed a certified 486-hour software engineering industry internship at Multifactors Sales, 
+              and engineered real-world digital automation pipelines in YouTube media workflows, web scraping, and SEO.
             </p>
           </motion.div>
         </div>

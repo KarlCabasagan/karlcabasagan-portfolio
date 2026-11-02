@@ -46,24 +46,24 @@ export const CVSection: React.FC = () => {
       {/* Quick Summary Grid */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-6">
         <div className="p-4 rounded-xl bg-surface-muted/60 border border-white/[0.04]">
-          <span className="text-[11px] font-mono uppercase text-slate-500 block mb-1">Degree & Major</span>
-          <p className="text-sm font-semibold text-white">BS in Information Technology</p>
-          <p className="text-xs text-slate-400 mt-1">Collegiate Capstone Lead Developer</p>
+          <span className="text-[11px] font-mono uppercase text-slate-500 block mb-1">Degree & Honors</span>
+          <p className="text-sm font-semibold text-white">BS in Information Technology (BSIT)</p>
+          <p className="text-xs text-accent-mint mt-1">Graduated Cum Laude • CGPA 1.32</p>
         </div>
 
         <div className="p-4 rounded-xl bg-surface-muted/60 border border-white/[0.04]">
-          <span className="text-[11px] font-mono uppercase text-slate-500 block mb-1">Core Focus Areas</span>
-          <p className="text-sm font-semibold text-white">Full-Stack & Systems Architecture</p>
-          <p className="text-xs text-slate-400 mt-1">PHP, Laravel, React, TypeScript, Supabase</p>
+          <span className="text-[11px] font-mono uppercase text-slate-500 block mb-1">Core Expertise</span>
+          <p className="text-sm font-semibold text-white">Full-Stack & REST API Design</p>
+          <p className="text-xs text-slate-400 mt-1">Laravel, React, PHP, MySQL, RBAC, Python</p>
         </div>
 
         <div className="p-4 rounded-xl bg-surface-muted/60 border border-white/[0.04]">
-          <span className="text-[11px] font-mono uppercase text-slate-500 block mb-1">Availability</span>
+          <span className="text-[11px] font-mono uppercase text-slate-500 block mb-1">Current Roles</span>
           <p className="text-sm font-semibold text-accent-mint flex items-center gap-1.5">
             <span className="w-2 h-2 rounded-full bg-accent-mint animate-pulse" />
-            Open for Roles & Contracts
+            Academic Instructor & Lead Dev
           </p>
-          <p className="text-xs text-slate-400 mt-1">Remote, Hybrid, or On-Site</p>
+          <p className="text-xs text-slate-400 mt-1">St. Peter's College • Open to Engagements</p>
         </div>
       </div>
 

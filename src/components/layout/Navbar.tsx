@@ -11,7 +11,7 @@ import {
   X,
   Sparkles,
 } from 'lucide-react'
-import { GithubIcon } from '../common/Icons'
+import { GithubIcon, LinkedInIcon } from '../common/Icons'
 
 const NAV_ITEMS = [
   { path: '/', label: 'Home', icon: Code2 },
@@ -103,17 +103,28 @@ export const Navbar: React.FC = () => {
             })}
           </nav>
 
-          {/* Right Action: GitHub Quick Link & Mobile Trigger */}
-          <div className="flex items-center gap-3">
+          {/* Right Action: GitHub & LinkedIn Quick Links & Mobile Trigger */}
+          <div className="flex items-center gap-2 sm:gap-3">
             <a
               href="https://github.com/KarlCabasagan"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Karl Cabasagan on GitHub"
-              className="flex items-center gap-2 px-3.5 py-2 text-xs font-medium text-slate-200 bg-surface/90 hover:bg-surface-muted border border-white/10 hover:border-accent-mint/40 rounded-xl transition-all tap-scale hit-target"
+              className="flex items-center gap-2 px-3 py-2 text-xs font-medium text-slate-200 bg-surface/90 hover:bg-surface-muted border border-white/10 hover:border-accent-mint/40 rounded-xl transition-all tap-scale hit-target"
             >
               <GithubIcon className="w-4 h-4 text-accent-mint" />
               <span className="hidden sm:inline font-mono">GitHub</span>
+            </a>
+
+            <a
+              href="https://www.linkedin.com/in/john-karl-harley-cabasagan-981489335/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="John Karl Harley Cabasagan on LinkedIn"
+              className="flex items-center gap-2 px-3 py-2 text-xs font-medium text-slate-200 bg-surface/90 hover:bg-surface-muted border border-white/10 hover:border-[#0A66C2]/60 rounded-xl transition-all tap-scale hit-target"
+            >
+              <LinkedInIcon className="w-4 h-4 text-[#0A66C2]" />
+              <span className="hidden sm:inline font-mono">LinkedIn</span>
             </a>
 
             {/* Mobile Hamburger Button */}

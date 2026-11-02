@@ -4,28 +4,28 @@ import { Layers, Database, ShieldCheck, Zap } from 'lucide-react'
 
 const STATS = [
   {
-    icon: Layers,
-    value: '18+',
-    label: 'Core Technologies',
-    detail: 'PHP, Laravel, TS, React, MySQL, Supabase, C++, Python',
+    icon: ShieldCheck,
+    value: 'Cum Laude',
+    label: 'Academic Distinction',
+    detail: 'BSIT Graduate • CGPA: 1.32 at St. Peter’s College',
   },
   {
     icon: Database,
-    value: '100%',
-    label: 'Full-Stack Rigor',
-    detail: 'Relational ACID integrity & secure REST API architecture',
+    value: '486 Hrs',
+    label: 'Corporate OJT',
+    detail: 'Full-Stack Developer Intern at Multifactors Sales',
+  },
+  {
+    icon: Layers,
+    value: '6+ Systems',
+    label: 'Lead Developer Projects',
+    detail: 'Agrilink, QR Attendance, SPC Academic Affairs, SPCanteen',
   },
   {
     icon: Zap,
-    value: '<50ms',
-    label: 'Target Latency',
-    detail: 'Optimized queries, indexing, and lightweight frontend bundles',
-  },
-  {
-    icon: ShieldCheck,
-    value: 'BSIT',
-    label: 'Degree Qualification',
-    detail: 'Information Technology academic excellence & engineering depth',
+    value: 'Part-Time',
+    label: 'College Instructor',
+    detail: 'Teaching Programming, Mobile Apps & Platform Technologies',
   },
 ]
 

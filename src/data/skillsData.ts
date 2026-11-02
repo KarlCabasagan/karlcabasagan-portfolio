@@ -1,6 +1,6 @@
 export interface Skill {
   name: string
-  category: 'languages' | 'frameworks' | 'databases' | 'tools'
+  category: 'languages' | 'frameworks' | 'databases' | 'systems' | 'operations'
   level: 'Expert' | 'Advanced' | 'Proficient' | 'Familiar'
   highlight: boolean
   description: string
@@ -9,62 +9,63 @@ export interface Skill {
 
 export const CATEGORIES = [
   { id: 'all', label: 'All Disciplines' },
-  { id: 'languages', label: 'Core Languages' },
-  { id: 'frameworks', label: 'Frameworks & Libs' },
+  { id: 'languages', label: 'Programming Languages' },
+  { id: 'frameworks', label: 'Frameworks & Libraries' },
   { id: 'databases', label: 'Databases & Cloud' },
-  { id: 'tools', label: 'CMS & Engineering Tools' },
+  { id: 'systems', label: 'Systems & Administration' },
+  { id: 'operations', label: 'Digital Automation & SEO' },
 ] as const
 
 export const SKILLS_DATA: Skill[] = [
-  // Core Languages
+  // Programming Languages
   {
     name: 'PHP',
     category: 'languages',
     level: 'Advanced',
     highlight: true,
-    description: 'Object-oriented backend services, modern PHP 8.x attributes, robust MVC architecture.',
+    description: 'Object-oriented backend services, modern PHP attributes, robust REST API architecture.',
+  },
+  {
+    name: 'JavaScript',
+    category: 'languages',
+    level: 'Advanced',
+    highlight: true,
+    description: 'Modern ESNext, asynchronous programming, DOM manipulation, client-side event loops.',
   },
   {
     name: 'TypeScript',
     category: 'languages',
     level: 'Advanced',
     highlight: true,
-    description: 'Type-safe scalable systems, generic interfaces, and strict static analysis.',
+    description: 'Type-safe scalable architectures, generic interfaces, and strict static analysis.',
   },
   {
-    name: 'JavaScript (ESNext)',
+    name: 'Java',
     category: 'languages',
-    level: 'Expert',
+    level: 'Proficient',
     highlight: true,
-    description: 'Asynchronous event loops, Web APIs, functional patterns, and browser execution profiling.',
+    description: 'Object-oriented programming, data structures, and collegiate algorithmic computation.',
   },
   {
     name: 'Python',
     category: 'languages',
     level: 'Proficient',
     highlight: false,
-    description: 'Data processing scripts, algorithmic tooling, automation, and backend utilities.',
-  },
-  {
-    name: 'Java',
-    category: 'languages',
-    level: 'Proficient',
-    highlight: false,
-    description: 'Object-oriented programming, data structures, and enterprise application patterns.',
+    description: 'Web data scraping, automation pipelines, data extraction, and backend utilities.',
   },
   {
     name: 'C++',
     category: 'languages',
     level: 'Proficient',
     highlight: false,
-    description: 'Low-level memory management, pointers, algorithmic problem solving, and CLI systems.',
+    description: 'Low-level memory management, pointers, algorithmic problem solving, and IoT control.',
   },
   {
     name: 'HTML5 & CSS3',
     category: 'languages',
     level: 'Expert',
     highlight: false,
-    description: 'Semantic markup, accessible WCAG 2.1 tree structure, modern CSS Grid/Flexbox layouts.',
+    description: 'Semantic markup, accessible WCAG tree structure, modern CSS Grid/Flexbox layouts.',
   },
 
   // Frameworks & Libraries
@@ -73,108 +74,124 @@ export const SKILLS_DATA: Skill[] = [
     category: 'frameworks',
     level: 'Advanced',
     highlight: true,
-    description: 'Artisan CLI, Eloquent ORM, service providers, authentication pipelines, and RESTful APIs.',
+    description: 'RESTful API development, Eloquent ORM, authentication pipelines, and transactional database integrity.',
   },
   {
-    name: 'React 19',
-    category: 'frameworks',
-    level: 'Expert',
-    highlight: true,
-    description: 'Component lifecycles, custom hooks, concurrent rendering, and reactive state trees.',
-  },
-  {
-    name: 'Next.js',
+    name: 'React.js',
     category: 'frameworks',
     level: 'Advanced',
     highlight: true,
-    description: 'Server-side rendering (SSR), static site generation (SSG), and optimized API endpoints.',
+    description: 'Component architecture, custom hooks, state management, and responsive web experiences.',
   },
   {
-    name: 'Vue.js',
+    name: 'React with TypeScript',
     category: 'frameworks',
-    level: 'Proficient',
-    highlight: false,
-    description: 'Composition API, reactive refs, single-file components, and lightweight frontends.',
-  },
-  {
-    name: 'Angular',
-    category: 'frameworks',
-    level: 'Familiar',
-    highlight: false,
-    description: 'Dependency injection, TypeScript-first decorators, and structured component modules.',
+    level: 'Advanced',
+    highlight: true,
+    description: 'Strict typing for components, props, hooks, and scalable design system integration.',
   },
   {
     name: 'Tailwind CSS',
     category: 'frameworks',
     level: 'Expert',
     highlight: true,
-    description: 'Design token architecture, custom utility plugins, responsive micro-layouts.',
-  },
-  {
-    name: 'Bootstrap',
-    category: 'frameworks',
-    level: 'Proficient',
-    highlight: false,
-    description: 'Rapid grid prototyping, responsive component layouts, utility-first adaptation.',
+    description: 'Utility-first modern styling, responsive viewports, and custom theme systems.',
   },
 
-  // Databases & Backend
+  // Databases & Cloud Architecture
   {
     name: 'MySQL',
     category: 'databases',
     level: 'Advanced',
     highlight: true,
-    description: 'Relational schema normalization, complex indexing, stored procedures, and query tuning.',
-  },
-  {
-    name: 'PostgreSQL',
-    category: 'databases',
-    level: 'Advanced',
-    highlight: true,
-    description: 'ACID transactions, JSONB querying, relational integrity, and performant aggregation.',
+    description: 'Relational database schema modeling, indexing, foreign key constraints, and transactional consistency.',
   },
   {
     name: 'Supabase',
     category: 'databases',
-    level: 'Advanced',
+    level: 'Proficient',
     highlight: true,
-    description: 'Row-Level Security (RLS), real-time WebSockets, edge functions, and OAuth identity.',
+    description: 'PostgreSQL-backed serverless platform, real-time client sync, and relational data management.',
   },
   {
     name: 'SQLite',
     category: 'databases',
     level: 'Proficient',
     highlight: false,
-    description: 'Embedded fast transactional storage, zero-config relational database operations.',
+    description: 'Embedded lightweight relational database management for desktop and local systems.',
+  },
+  {
+    name: 'Firebase',
+    category: 'databases',
+    level: 'Proficient',
+    highlight: false,
+    description: 'NoSQL cloud document storage, authentication services, and real-time event triggers.',
+  },
+  {
+    name: 'Role-Based Access Control (RBAC)',
+    category: 'databases',
+    level: 'Advanced',
+    highlight: true,
+    description: 'Architecting fine-grained user privilege tiers, route protection guards, and audit log access.',
   },
 
-  // CMS & Tools
+  // Systems & Network Administration
   {
-    name: 'WordPress',
-    category: 'tools',
-    level: 'Advanced',
-    highlight: true,
-    description: 'Custom theme & plugin development, headless WP REST APIs, and CMS customization.',
-  },
-  {
-    name: 'Git & GitHub',
-    category: 'tools',
-    level: 'Advanced',
-    highlight: true,
-    description: 'Branching workflows, semantic versioning, conventional commits, and team collaboration.',
-  },
-  {
-    name: 'Vite',
-    category: 'tools',
-    level: 'Expert',
-    highlight: false,
-    description: 'Fast HMR bundling, Rollup pipeline optimizations, and plugin integrations.',
-  },
-  {
-    name: 'Postman & REST APIs',
-    category: 'tools',
+    name: 'Windows Systems Administration',
+    category: 'systems',
     level: 'Advanced',
     highlight: false,
-    description: 'Contract-first API testing, automated collection runners, and payload inspection.',
+    description: 'System configuration, diagnostic tooling, enterprise workstation administration, and software rollouts.',
+  },
+  {
+    name: 'Linux Environments',
+    category: 'systems',
+    level: 'Proficient',
+    highlight: false,
+    description: 'Command-line familiarity, shell utilities, permissions management, and server deployments.',
+  },
+  {
+    name: 'Networking Foundations',
+    category: 'systems',
+    level: 'Proficient',
+    highlight: false,
+    description: 'IP addressing, Local Area Networks (LAN), Wide Area Networks (WAN), and router/modem deployment.',
+  },
+  {
+    name: 'IT Support & Troubleshooting',
+    category: 'systems',
+    level: 'Advanced',
+    highlight: false,
+    description: 'Diagnostics, computer hardware deployment, system maintenance, and peripheral configuration.',
+  },
+
+  // Digital Automation & Operations
+  {
+    name: 'YouTube Automation Pipelines',
+    category: 'operations',
+    level: 'Advanced',
+    highlight: true,
+    description: 'Scalable script-driven workflows for automated digital content delivery and media pipelines.',
+  },
+  {
+    name: 'Web Scraping & Data Extraction',
+    category: 'operations',
+    level: 'Advanced',
+    highlight: true,
+    description: 'Specialized data scraping technologies, automated crawlers, parsing, and structured data extraction.',
+  },
+  {
+    name: 'Search Engine Optimization (SEO)',
+    category: 'operations',
+    level: 'Advanced',
+    highlight: false,
+    description: 'Advanced SEO methodologies, organic search ranking algorithms, and performance auditing.',
+  },
+  {
+    name: 'B2B Lead Qualification',
+    category: 'operations',
+    level: 'Proficient',
+    highlight: false,
+    description: 'Market lead discovery algorithms, automated qualification pipelines, and commercial lead vetting.',
   },
 ]

@@ -29,7 +29,7 @@ export const ContactForm: React.FC = () => {
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [copied, setCopied] = useState(false)
 
-  const CONTACT_EMAIL = 'cabasagan.karl@gmail.com'
+  const CONTACT_EMAIL = 'karlcabasagan.202200008@gmail.com'
 
   const handleCopyEmail = () => {
     navigator.clipboard.writeText(CONTACT_EMAIL)

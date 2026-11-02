@@ -1,6 +1,6 @@
 import React from 'react'
 import { motion } from 'framer-motion'
-import { GraduationCap, Briefcase, CheckCircle2, Calendar, MapPin, Milestone } from 'lucide-react'
+import { GraduationCap, Briefcase, CheckCircle2, Calendar, MapPin, Milestone, Users } from 'lucide-react'
 import { TIMELINE_DATA, type ExperienceItem } from '../../data/experienceData'
 
 export const Timeline: React.FC = () => {
@@ -15,6 +15,11 @@ export const Timeline: React.FC = () => {
         return {
           icon: Briefcase,
           color: 'text-accent-mint bg-accent-mint/10 border-accent-mint/30',
+        }
+      case 'Leadership':
+        return {
+          icon: Users,
+          color: 'text-amber-400 bg-amber-500/10 border-amber-500/30',
         }
       case 'Milestone':
         return {

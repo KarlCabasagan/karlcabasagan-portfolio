@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { Mail, ArrowUpRight, Terminal, Heart } from 'lucide-react'
-import { GithubIcon } from '../common/Icons'
+import { GithubIcon, LinkedInIcon } from '../common/Icons'
 
 export const Footer: React.FC = () => {
   const [timeString, setTimeString] = useState('')
@@ -36,13 +36,12 @@ export const Footer: React.FC = () => {
               <span className="text-white font-semibold text-sm">John Karl Harley A. Cabasagan</span>
             </div>
             <p className="text-slate-400 text-xs leading-relaxed max-w-prose mb-4">
-              BSIT Graduate & Full-Stack Developer building scalable web applications, 
-              robust backend architectures (Laravel, Supabase, MySQL), and creative animated interfaces.
+              Cum Laude BSIT Graduate (St. Peter's College), Academic Instructor & Lead Developer engineering scalable web applications, robust Laravel REST APIs, and responsive React applications.
             </p>
             <div className="flex items-center gap-3">
               <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-white/[0.04] border border-white/10 text-[11px] font-mono text-slate-300">
                 <span className="w-2 h-2 rounded-full bg-accent-mint animate-pulse" />
-                Manila, PH <span className="tabular-nums text-slate-400">({timeString || 'UTC+8'})</span>
+                Iligan City, PH <span className="tabular-nums text-slate-400">({timeString || 'UTC+8'})</span>
               </span>
               <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-accent-mint/10 border border-accent-mint/30 text-[11px] font-mono text-accent-mint">
                 Open to Opportunities
@@ -100,6 +99,18 @@ export const Footer: React.FC = () => {
                   <GithubIcon className="w-3.5 h-3.5" />
                   <span>GitHub Profile</span>
                   <ArrowUpRight className="w-3 h-3 text-slate-500 group-hover:text-accent-mint transition-colors" />
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://www.linkedin.com/in/john-karl-harley-cabasagan-981489335/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-1 text-slate-400 hover:text-accent-cyan transition-colors py-1 group"
+                >
+                  <LinkedInIcon className="w-3.5 h-3.5" />
+                  <span>LinkedIn Profile</span>
+                  <ArrowUpRight className="w-3 h-3 text-slate-500 group-hover:text-accent-cyan transition-colors" />
                 </a>
               </li>
               <li>

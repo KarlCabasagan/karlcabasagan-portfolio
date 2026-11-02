@@ -26,9 +26,9 @@ export const Hero: React.FC = () => {
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent-mint opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-accent-mint"></span>
             </span>
-            <span className="font-mono text-accent-mint font-medium">BSIT Graduate</span>
+            <span className="font-mono text-accent-mint font-medium">BSIT • Graduated Cum Laude (CGPA 1.32)</span>
             <span className="text-slate-500">•</span>
-            <span>Full-Stack & Creative UI/UX Engineer</span>
+            <span>Full-Stack Developer & Lead Systems Architect</span>
           </motion.div>
 
           {/* Main Title */}
@@ -55,9 +55,9 @@ export const Hero: React.FC = () => {
             transition={{ duration: 0.25, delay: 0.1 }}
             className="text-base sm:text-lg text-slate-400 leading-relaxed max-w-prose mb-8"
           >
-            I synthesize full-stack engineering with creative design precision. From robust
-            PHP/Laravel APIs, Supabase real-time pipelines, and normalized SQL schemas to fluid,
-            micro-interaction rich React & Next.js client experiences.
+            Cum Laude BSIT graduate from St. Peter's College with proven leadership in full-stack web
+            development, RESTful API architecture with Laravel, and interactive React applications.
+            Lead Developer on collegiate platforms spanning agricultural optimization, dynamic QR verification, and academic evaluation systems.
           </motion.p>
 
           {/* Action CTAs */}
@@ -135,42 +135,44 @@ export const Hero: React.FC = () => {
                   <span className="text-emerald-300">'John Karl Harley A. Cabasagan'</span>,
                 </p>
                 <p>
-                  <span className="text-slate-400">credentials:</span>{' '}
-                  <span className="text-emerald-300">'BSIT Graduate'</span>,
+                  <span className="text-slate-400">honor:</span>{' '}
+                  <span className="text-amber-300">'Cum Laude (CGPA 1.32)'</span>,
+                </p>
+                <p>
+                  <span className="text-slate-400">almaMater:</span>{' '}
+                  <span className="text-emerald-300">"St. Peter's College (BSIT)"</span>,
                 </p>
                 <p>
                   <span className="text-slate-400">coreBackends:</span> [
-                  <span className="text-amber-200">'PHP'</span>,{' '}
                   <span className="text-amber-200">'Laravel'</span>,{' '}
-                  <span className="text-amber-200">'Supabase'</span>,{' '}
+                  <span className="text-amber-200">'PHP'</span>,{' '}
+                  <span className="text-amber-200">'REST APIs'</span>,{' '}
                   <span className="text-amber-200">'MySQL'</span>,{' '}
-                  <span className="text-amber-200">'PostgreSQL'</span>],
+                  <span className="text-amber-200">'Supabase'</span>],
                 </p>
                 <p>
                   <span className="text-slate-400">coreFrontends:</span> [
-                  <span className="text-teal-200">'React 19'</span>,{' '}
+                  <span className="text-teal-200">'React.js'</span>,{' '}
                   <span className="text-teal-200">'TypeScript'</span>,{' '}
-                  <span className="text-teal-200">'Next.js'</span>,{' '}
-                  <span className="text-teal-200">'Tailwind'</span>],
+                  <span className="text-teal-200">'Tailwind CSS'</span>],
                 </p>
                 <p>
-                  <span className="text-slate-400">polyglotFamiliarity:</span> [
-                  <span className="text-slate-300">'Python'</span>,{' '}
+                  <span className="text-slate-400">languages:</span> [
                   <span className="text-slate-300">'Java'</span>,{' '}
                   <span className="text-slate-300">'C++'</span>,{' '}
-                  <span className="text-slate-300">'Vue'</span>,{' '}
-                  <span className="text-slate-300">'Angular'</span>],
+                  <span className="text-slate-300">'Python'</span>,{' '}
+                  <span className="text-slate-300">'JavaScript'</span>],
                 </p>
                 <p>
-                  <span className="text-slate-400">status:</span>{' '}
-                  <span className="text-accent-mint font-semibold">'Ready to Deploy & Scale'</span>,
+                  <span className="text-slate-400">specialization:</span>{' '}
+                  <span className="text-accent-mint font-semibold">'Lead Full-Stack Developer & Instructor'</span>,
                 </p>
                 <p>
                   <span className="text-slate-400">solveProblem:</span> () =&gt; &#123;
                 </p>
                 <p className="pl-4 text-slate-400">
                   <span className="text-violet-400">return</span>{' '}
-                  <span className="text-emerald-300">'High Performance + Zero AI Slop'</span>;
+                  <span className="text-emerald-300">'Architectural Rigor + Production Reliability'</span>;
                 </p>
                 <p>&#125;</p>
               </div>

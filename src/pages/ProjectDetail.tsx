@@ -1,6 +1,5 @@
 import React, { useState, useCallback, useEffect } from 'react'
-import { useParams, Link, useNavigate } from 'react-router-dom'
-import { motion, AnimatePresence } from 'framer-motion'
+import { useParams, Link } from 'react-router-dom'
 import {
   ArrowLeft,
   ArrowRight,
@@ -22,7 +21,6 @@ import { PROJECTS_DATA, type Project } from '../data/projectsData'
 
 export const ProjectDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>()
-  const navigate = useNavigate()
 
   const [copiedClone, setCopiedClone] = useState<boolean>(false)
   const [copiedCode, setCopiedCode] = useState<boolean>(false)

@@ -1,11 +1,12 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { ArrowRight, ExternalLink, Sparkles } from 'lucide-react'
+import { ArrowRight, Sparkles } from 'lucide-react'
 import { GithubIcon } from '../common/Icons'
 import { PROJECTS_DATA } from '../../data/projectsData'
 
 export const FeaturedHighlights: React.FC = () => {
+  const navigate = useNavigate()
   const featured = PROJECTS_DATA.filter((p) => p.featured).slice(0, 3)
 
   return (
@@ -36,7 +37,11 @@ export const FeaturedHighlights: React.FC = () => {
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.22, delay: idx * 0.06 }}
-            className="group flex flex-col justify-between p-6 rounded-2xl bg-surface/80 border border-white/[0.08] hover:border-accent-mint/30 glass-surface-hover"
+            onClick={(e) => {
+              if ((e.target as HTMLElement).closest('a')) return
+              navigate(`/projects/${project.id}`)
+            }}
+            className="group flex flex-col justify-between p-6 rounded-2xl bg-surface/80 border border-white/[0.08] hover:border-accent-mint/30 glass-surface-hover cursor-pointer"
           >
             <div>
               <div className="flex items-center justify-between gap-2 mb-3">
@@ -78,11 +83,11 @@ export const FeaturedHighlights: React.FC = () => {
               </a>
 
               <Link
-                to="/projects"
-                className="flex items-center gap-1 text-accent-mint hover:text-emerald-300 font-medium transition-colors hit-target tap-scale"
+                to={`/projects/${project.id}`}
+                className="flex items-center gap-1.5 text-accent-mint hover:text-emerald-300 font-semibold transition-colors hit-target tap-scale"
               >
                 <span>Details</span>
-                <ExternalLink className="w-3 h-3" />
+                <ArrowRight className="w-3.5 h-3.5" />
               </Link>
             </div>
           </motion.div>

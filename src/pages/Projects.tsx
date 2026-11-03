@@ -2,11 +2,9 @@ import React, { useState, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { PageWrapper } from '../components/layout/PageWrapper'
 import { ProjectCard } from '../components/projects/ProjectCard'
-import { ProjectModal } from '../components/projects/ProjectModal'
 import {
   PROJECTS_DATA,
   PROJECT_CATEGORIES,
-  type Project,
 } from '../../src/data/projectsData'
 import { FolderGit2, Search, SlidersHorizontal } from 'lucide-react'
 import { GithubIcon } from '../components/common/Icons'
@@ -14,7 +12,6 @@ import { GithubIcon } from '../components/common/Icons'
 export const Projects: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>('All')
   const [searchQuery, setSearchQuery] = useState<string>('')
-  const [selectedProject, setSelectedProject] = useState<Project | null>(null)
 
   const filteredProjects = useMemo(() => {
     return PROJECTS_DATA.filter((p) => {
@@ -121,7 +118,6 @@ export const Projects: React.FC = () => {
             <ProjectCard
               key={project.id}
               project={project}
-              onSelect={setSelectedProject}
             />
           ))}
         </AnimatePresence>
@@ -142,12 +138,6 @@ export const Projects: React.FC = () => {
           </button>
         </div>
       )}
-
-      {/* Project Detail Modal */}
-      <ProjectModal
-        project={selectedProject}
-        onClose={() => setSelectedProject(null)}
-      />
     </PageWrapper>
   )
 }

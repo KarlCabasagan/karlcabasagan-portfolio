@@ -1,15 +1,29 @@
 import React from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { ExternalLink, Sparkles, CheckCircle, ArrowUpRight } from 'lucide-react'
+import { Sparkles, CheckCircle, ArrowUpRight, ArrowRight } from 'lucide-react'
 import { GithubIcon } from '../common/Icons'
 import type { Project } from '../../data/projectsData'
 
 interface ProjectCardProps {
   project: Project
-  onSelect: (project: Project) => void
+  onSelect?: (project: Project) => void
 }
 
 export const ProjectCard: React.FC<ProjectCardProps> = ({ project, onSelect }) => {
+  const navigate = useNavigate()
+
+  const handleCardClick = (e: React.MouseEvent) => {
+    if ((e.target as HTMLElement).closest('a, button')) {
+      return
+    }
+    if (onSelect) {
+      onSelect(project)
+    } else {
+      navigate(`/projects/${project.id}`)
+    }
+  }
+
   return (
     <motion.div
       layout
@@ -17,7 +31,8 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, onSelect }) =
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, scale: 0.98 }}
       transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
-      className="group rounded-2xl bg-surface/80 border border-white/[0.08] hover:border-accent-mint/40 glass-surface-hover flex flex-col justify-between overflow-hidden"
+      onClick={handleCardClick}
+      className="group rounded-2xl bg-surface/80 border border-white/[0.08] hover:border-accent-mint/40 glass-surface-hover flex flex-col justify-between overflow-hidden cursor-pointer"
     >
       <div className="p-6">
         {/* Header badges */}
@@ -99,13 +114,19 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, onSelect }) =
           <ArrowUpRight className="w-3 h-3 text-slate-500" />
         </a>
 
-        <button
-          onClick={() => onSelect(project)}
-          className="inline-flex items-center gap-1 text-xs font-medium text-accent-mint hover:text-emerald-300 transition-colors tap-scale hit-target min-h-[36px]"
+        <Link
+          to={`/projects/${project.id}`}
+          onClick={(e) => {
+            if (onSelect) {
+              e.preventDefault()
+              onSelect(project)
+            }
+          }}
+          className="inline-flex items-center gap-1.5 text-xs font-semibold text-accent-mint hover:text-emerald-300 transition-colors tap-scale hit-target min-h-[36px]"
         >
           <span>Deep Dive</span>
-          <ExternalLink className="w-3 h-3" />
-        </button>
+          <ArrowRight className="w-3.5 h-3.5" />
+        </Link>
       </div>
     </motion.div>
   )

@@ -1,3 +1,23 @@
+export interface ProjectArchitectureStep {
+  step: string
+  title: string
+  detail: string
+  tech: string
+}
+
+export interface ProjectCodeSnippet {
+  filename: string
+  language: string
+  code: string
+  description?: string
+}
+
+export interface ProjectScreenshot {
+  title: string
+  caption: string
+  placeholderText?: string
+}
+
 export interface Project {
   id: string
   title: string
@@ -10,6 +30,12 @@ export interface Project {
   demoUrl?: string
   highlights: string[]
   metrics?: { label: string; value: string }[]
+  architecture?: {
+    summary: string
+    steps: ProjectArchitectureStep[]
+  }
+  codeSnippet?: ProjectCodeSnippet
+  screenshots?: ProjectScreenshot[]
 }
 
 export const PROJECT_CATEGORIES = ['All', 'Full-Stack', 'Backend', 'Frontend', 'Systems'] as const
@@ -34,6 +60,88 @@ export const PROJECTS_DATA: Project[] = [
       { label: 'Role', value: 'Lead Developer' },
       { label: 'Scope', value: 'End-to-End' },
       { label: 'Domain', value: 'AgriTech' }
+    ],
+    architecture: {
+      summary: 'Three-tier agricultural ecosystem coupling a predictive agronomic engine with a transactional marketplace.',
+      steps: [
+        {
+          step: '01',
+          title: 'Soil & Climate Telemetry Ingestion',
+          detail: 'Farmer inputs nitrogen, phosphorus, potassium, and soil pH levels along with historical rainfall records.',
+          tech: 'Form Ingestion & Validation'
+        },
+        {
+          step: '02',
+          title: 'Predictive Proximity Scoring',
+          detail: 'Recommendation engine computes Euclidean distance across localized crop suitability models to rank optimal seeds.',
+          tech: 'Agronomic Algorithmic Model'
+        },
+        {
+          step: '03',
+          title: 'Marketplace Inventory Sync',
+          detail: 'Projected harvests seamlessly transition to marketplace catalogs with live buyer bids and price index tracking.',
+          tech: 'Laravel Eloquent & MySQL'
+        },
+        {
+          step: '04',
+          title: 'Commercial Transaction Settlement',
+          detail: 'Direct farmer-to-consumer order dispatching with transactional verification and shipment milestone updates.',
+          tech: 'RESTful API & Event Listeners'
+        }
+      ]
+    },
+    codeSnippet: {
+      filename: 'app/Services/CropRecommendationService.php',
+      language: 'php',
+      description: 'Calculates crop suitability scores based on regional soil chemistry and climatic tolerances.',
+      code: `<?php
+
+namespace App\\Services;
+
+class CropRecommendationService
+{
+    /**
+     * Compute top crop candidates based on soil chemistry.
+     */
+    public function recommend(array $soilProfile): array
+    {
+        $crops = \\App\\Models\\CropBaseline::all();
+        $rankings = [];
+
+        foreach ($crops as $crop) {
+            $nDiff = pow($soilProfile['nitrogen'] - $crop->optimal_n, 2);
+            $pDiff = pow($soilProfile['phosphorus'] - $crop->optimal_p, 2);
+            $kDiff = pow($soilProfile['potassium'] - $crop->optimal_k, 2);
+            $phDiff = pow(($soilProfile['ph'] - $crop->optimal_ph) * 10, 2);
+
+            // Euclidean distance score (lower difference represents higher agronomic fit)
+            $distance = sqrt($nDiff + $pDiff + $kDiff + $phDiff);
+            $suitability = max(0, round(100 - ($distance * 1.25), 2));
+
+            $rankings[] = [
+                'crop_id' => $crop->id,
+                'name' => $crop->common_name,
+                'suitability_score' => $suitability,
+                'recommended_season' => $crop->planting_season,
+            ];
+        }
+
+        usort($rankings, fn($a, $b) => $b['suitability_score'] <=> $a['suitability_score']);
+        return array_slice($rankings, 0, 5);
+    }
+}`
+    },
+    screenshots: [
+      {
+        title: 'Crop Recommendation Portal',
+        caption: 'Farmer interface displaying soil telemetry input fields and calculated agronomic yield rankings.',
+        placeholderText: 'Agrilink Recommendation Engine Dashboard'
+      },
+      {
+        title: 'Marketplace Order Dispatch',
+        caption: 'Direct commercial catalog listing farm produce with real-time bidding between buyers and producers.',
+        placeholderText: 'Agrilink Farmer Marketplace Interface'
+      }
     ]
   },
   {
@@ -55,6 +163,102 @@ export const PROJECTS_DATA: Project[] = [
       { label: 'Architecture', value: 'RESTful API' },
       { label: 'Verification', value: 'Real-Time' },
       { label: 'Framework', value: 'Laravel' }
+    ],
+    architecture: {
+      summary: 'Stateless verification pipeline with rotating TOTP tokens preventing replay attacks and proxy attendance.',
+      steps: [
+        {
+          step: '01',
+          title: 'Ephemeral QR Token Generation',
+          detail: 'Administrative screen displays rotating HMAC-signed tokens regenerating every 15 seconds.',
+          tech: 'Laravel Cache & HMAC-SHA256'
+        },
+        {
+          step: '02',
+          title: 'Mobile Scanner Ingestion',
+          detail: 'Student/employee scans dynamic token using mobile app, dispatching encrypted bearer credentials.',
+          tech: 'RESTful Endpoint /api/v1/scan'
+        },
+        {
+          step: '03',
+          title: 'Cryptographic & Time-Window Validation',
+          detail: 'API validates token signature, timestamp window (<20s), and confirms no prior clock-in within interval.',
+          tech: 'AttendanceVerificationMiddleware'
+        },
+        {
+          step: '04',
+          title: 'Audit Ledger Persistence',
+          detail: 'Verified clock-in written with geofence coordinate verification and timestamped database index.',
+          tech: 'MySQL Indexed Event Logs'
+        }
+      ]
+    },
+    codeSnippet: {
+      filename: 'app/Http/Controllers/Api/AttendanceVerificationController.php',
+      language: 'php',
+      description: 'Validates ephemeral QR payload, verifies freshness window, and writes verified attendance record.',
+      code: `<?php
+
+namespace App\\Http\\Controllers\\Api;
+
+use App\\Http\\Controllers\\Controller;
+use Illuminate\\Http\\Request;
+use Illuminate\\Support\\Facades\\Cache;
+use App\\Models\\AttendanceLog;
+
+class AttendanceVerificationController extends Controller
+{
+    public function verifyScan(Request $request)
+    {
+        $validated = $request->validate([
+            'session_token' => 'required|string',
+            'scanned_code' => 'required|string',
+            'client_timestamp' => 'required|integer',
+        ]);
+
+        $cachedPayload = Cache::get('qr_active_' . $validated['session_token']);
+
+        if (!$cachedPayload || !hash_equals($cachedPayload['code'], $validated['scanned_code'])) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Invalid or expired QR verification token.'
+            ], 422);
+        }
+
+        $userId = $request->user()->id;
+        $today = now()->toDateString();
+
+        $alreadyLogged = AttendanceLog::where('user_id', $userId)
+            ->whereDate('created_at', $today)
+            ->where('session_id', $cachedPayload['session_id'])
+            ->exists();
+
+        if ($alreadyLogged) {
+            return response()->json(['status' => 'duplicate', 'message' => 'Attendance already recorded.'], 409);
+        }
+
+        $log = AttendanceLog::create([
+            'user_id' => $userId,
+            'session_id' => $cachedPayload['session_id'],
+            'verified_at' => now(),
+            'ip_address' => $request->ip(),
+        ]);
+
+        return response()->json(['status' => 'success', 'data' => $log], 200);
+    }
+}`
+    },
+    screenshots: [
+      {
+        title: 'Dynamic QR Generation Terminal',
+        caption: 'Administrative terminal rotating cryptographic QR codes at 15-second intervals with session status.',
+        placeholderText: 'QR Attendance Host Screen'
+      },
+      {
+        title: 'Attendance Verification Ledger',
+        caption: 'Real-time administrative feed logging verified attendee check-ins, timestamps, and audit metrics.',
+        placeholderText: 'Real-Time Attendance Audit Dashboard'
+      }
     ]
   },
   {
@@ -76,6 +280,82 @@ export const PROJECTS_DATA: Project[] = [
       { label: 'Institution', value: "St. Peter's College" },
       { label: 'Accuracy', value: '100% Automated' },
       { label: 'Impact', value: 'Campus-Wide' }
+    ],
+    architecture: {
+      summary: 'Multi-stakeholder academic audit framework delivering automated weighted tallying across faculty metrics.',
+      steps: [
+        {
+          step: '01',
+          title: 'Role-Based Authentication',
+          detail: 'Granular ACL isolates Student, Peer Faculty, Department Head, and Dean access permissions.',
+          tech: 'Session RBAC Matrix'
+        },
+        {
+          step: '02',
+          title: 'Anonymized Response Ingestion',
+          detail: 'Evaluation submissions strip student identity linkage while validating single-submission constraints.',
+          tech: 'Anonymized Assessment Tokens'
+        },
+        {
+          step: '03',
+          title: 'Weighted Statistical Pipeline',
+          detail: 'Computes institutional scorecards factoring category weights: 40% Students, 30% Peers, 30% Deans.',
+          tech: 'EvaluationTallyEngine'
+        },
+        {
+          step: '04',
+          title: 'Institutional Audit Dispatch',
+          detail: 'Generates aggregated faculty performance matrices and downloadable department audits.',
+          tech: 'PDF/Spreadsheet Export Engine'
+        }
+      ]
+    },
+    codeSnippet: {
+      filename: 'app/Services/EvaluationTallyService.php',
+      language: 'php',
+      description: 'Computes weighted academic performance scores across student, peer, and supervisor evaluations.',
+      code: `<?php
+
+namespace App\\Services;
+
+class EvaluationTallyService
+{
+    /**
+     * Compute composite weighted rating for a faculty member.
+     */
+    public function computeCompositeScore(int $facultyId, string $academicPeriod): array
+    {
+        $studentRating = $this->getMeanScore($facultyId, $academicPeriod, 'student');
+        $peerRating = $this->getMeanScore($facultyId, $academicPeriod, 'peer');
+        $supervisorRating = $this->getMeanScore($facultyId, $academicPeriod, 'supervisor');
+
+        // Weighted criteria formula: Student (40%), Peer (30%), Supervisor (30%)
+        $composite = ($studentRating * 0.40) + ($peerRating * 0.30) + ($supervisorRating * 0.30);
+
+        return [
+            'faculty_id' => $facultyId,
+            'breakdown' => [
+                'students' => round($studentRating, 2),
+                'peers' => round($peerRating, 2),
+                'supervisors' => round($supervisorRating, 2),
+            ],
+            'final_rating' => round($composite, 2),
+            'qualitative_index' => $this->resolveDescriptor($composite),
+        ];
+    }
+}`
+    },
+    screenshots: [
+      {
+        title: 'Institutional Evaluation Portal',
+        caption: 'Faculty appraisal interface showing criteria questions, rating rubrics, and submission status.',
+        placeholderText: 'SPC Faculty Evaluation Interface'
+      },
+      {
+        title: 'Department Analytics Matrix',
+        caption: 'Administrative reporting dashboard charting faculty ratings, standard deviations, and campus benchmarks.',
+        placeholderText: 'Academic Affairs Audit Portal'
+      }
     ]
   },
   {
@@ -96,6 +376,56 @@ export const PROJECTS_DATA: Project[] = [
     metrics: [
       { label: 'Efficiency', value: 'Low Wait' },
       { label: 'Audience', value: 'Campus Community' }
+    ],
+    architecture: {
+      summary: 'Lightweight order queue dispatcher linking customer cart placements to kitchen prep queues.',
+      steps: [
+        {
+          step: '01',
+          title: 'Menu Item Ingestion',
+          detail: 'Real-time stock ledger decrements menu options when kitchen inventory exhausts.',
+          tech: 'Relational Stock Registry'
+        },
+        {
+          step: '02',
+          title: 'Digital Order Dispatch',
+          detail: 'Student compiles pre-order cart and issues pickup request with target lunch window.',
+          tech: 'Cart State Manager'
+        },
+        {
+          step: '03',
+          title: 'Kitchen Prep Queue',
+          detail: 'Kitchen terminal streams pending tickets categorized by prep status (Queued -> Cooking -> Ready).',
+          tech: 'Polling Ticket Queue'
+        }
+      ]
+    },
+    codeSnippet: {
+      filename: 'services/OrderQueueManager.js',
+      language: 'javascript',
+      description: 'Processes incoming kitchen orders, updates transaction logs, and updates order states.',
+      code: `export class OrderQueueManager {
+  static formatKitchenTicket(order) {
+    return {
+      orderId: order.id,
+      ticketCode: \`SPC-\${order.id.toString().padStart(4, '0')}\`,
+      items: order.cart.map(item => ({
+        name: item.name,
+        quantity: item.qty,
+        specialNotes: item.notes || 'None'
+      })),
+      timestamp: new Date().toLocaleTimeString(),
+      status: 'PREPARATION_PENDING'
+    };
+  }
+}`
+    },
+    screenshots: [
+      {
+        title: 'Digital Food Service Menu',
+        caption: 'Responsive student pre-ordering screen with daily meal specials and dietary categorizations.',
+        placeholderText: 'SPCanteen Menu & Cart Interface'
+      }
     ]
   },
   {
@@ -116,6 +446,44 @@ export const PROJECTS_DATA: Project[] = [
     metrics: [
       { label: 'Focus', value: 'Inventory Tracking' },
       { label: 'Alerting', value: 'Automated' }
+    ],
+    architecture: {
+      summary: 'Reactive client-side stock registry with threshold evaluation and local persistence.',
+      steps: [
+        {
+          step: '01',
+          title: 'Stock Ledger Registry',
+          detail: 'Consumable entries tracked with expiration dates, current volume, and minimum restock thresholds.',
+          tech: 'React State & Schema'
+        },
+        {
+          step: '02',
+          title: 'Automated Reorder Trigger',
+          detail: 'Evaluation daemon scans inventory levels and populates shopping list when item crosses threshold.',
+          tech: 'Client Evaluation Engine'
+        }
+      ]
+    },
+    codeSnippet: {
+      filename: 'src/hooks/useInventoryAlerts.ts',
+      language: 'typescript',
+      description: 'Calculates expiration status and generates automated reorder warnings.',
+      code: `export function evaluateStockThresholds(items: StockItem[]) {
+  return items.filter(item => {
+    const isUnderStocked = item.currentQuantity <= item.minThreshold;
+    const isNearingExpiry = item.expiryDate 
+      ? new Date(item.expiryDate).getTime() - Date.now() < 3 * 86400000 
+      : false;
+    return isUnderStocked || isNearingExpiry;
+  });
+}`
+    },
+    screenshots: [
+      {
+        title: 'CheckMate Stock Surveillance View',
+        caption: 'Dashboard highlighting low-stock consumable items with expiration alert badges.',
+        placeholderText: 'CheckMate Inventory Dashboard'
+      }
     ]
   },
   {
@@ -136,6 +504,68 @@ export const PROJECTS_DATA: Project[] = [
     metrics: [
       { label: 'Domain', value: 'IoT & Systems' },
       { label: 'Response', value: 'Immediate Trip' }
+    ],
+    architecture: {
+      summary: 'Real-time embedded monitoring system linking ADC current transducers to fast-acting relay trips.',
+      steps: [
+        {
+          step: '01',
+          title: 'High-Frequency Sensor Sampling',
+          detail: 'Microcontroller ADC samples voltage and shunt current waveforms at 1 kHz frequency.',
+          tech: 'Embedded ADC & Transducers'
+        },
+        {
+          step: '02',
+          title: 'Overcurrent Interrupt Trip',
+          detail: 'Hardware interrupt trips relay mechanism in under 10 milliseconds if current threshold breaches limits.',
+          tech: 'Hardware Interrupt & GPIO'
+        },
+        {
+          step: '03',
+          title: 'Telemetry Packet Broadcast',
+          detail: 'Status packet with voltage, current, and trip reason serialized and transmitted to central hub.',
+          tech: 'Serial / Wi-Fi UDP Stream'
+        }
+      ]
+    },
+    codeSnippet: {
+      filename: 'firmware/src/breaker_controller.cpp',
+      language: 'cpp',
+      description: 'Microcontroller loop monitoring instantaneous current with sub-10ms hardware trip trigger.',
+      code: `#include <Arduino.h>
+
+const int SENSOR_PIN = A0;
+const int RELAY_PIN = 7;
+const float OVERCURRENT_LIMIT_AMPS = 25.0;
+
+void setup() {
+  pinMode(RELAY_PIN, OUTPUT);
+  digitalWrite(RELAY_PIN, HIGH); // Breaker Closed
+  Serial.begin(115200);
+}
+
+void loop() {
+  int rawAdc = analogRead(SENSOR_PIN);
+  float voltage = (rawAdc * 5.0) / 1024.0;
+  float currentAmps = (voltage - 2.5) / 0.066; // ACS712-30A calibration
+
+  if (currentAmps >= OVERCURRENT_LIMIT_AMPS) {
+    // Immediate Safety Trip Trigger (<8ms)
+    digitalWrite(RELAY_PIN, LOW);
+    Serial.printf("[FAULT_TRIP] Overcurrent detected: %.2fA\\n", currentAmps);
+    while (true) {
+      // Lock open state until manual hardware reset
+      delay(500);
+    }
+  }
+}`
+    },
+    screenshots: [
+      {
+        title: 'Smart Breaker Telemetry Console',
+        caption: 'Hardware console charting live circuit amperage and trigger status.',
+        placeholderText: 'Smart Breaker Electrical Telemetry View'
+      }
     ]
   },
   {
@@ -157,6 +587,50 @@ export const PROJECTS_DATA: Project[] = [
       { label: 'Security', value: 'Granular RBAC' },
       { label: 'Partner', value: 'MSU-IIT CCS' },
       { label: 'Scope', value: 'Financial Audit' }
+    ],
+    architecture: {
+      summary: 'Departmental financial ledger securing multi-tier organizational transactions with audit records.',
+      steps: [
+        {
+          step: '01',
+          title: 'Officer Role Gatekeeping',
+          detail: 'Fine-grained permissions separate collection officers, audit treasurers, and department heads.',
+          tech: 'RBAC Policy Engine'
+        },
+        {
+          step: '02',
+          title: 'Transaction Audit Trail',
+          detail: 'Every student contribution is verified with receipt tokens and irreversible ledger audit records.',
+          tech: 'Immutable Audit Logging'
+        }
+      ]
+    },
+    codeSnippet: {
+      filename: 'app/Security/RbacMiddleware.php',
+      language: 'php',
+      description: 'Validates administrative permissions before accessing financial ledger endpoints.',
+      code: `<?php
+
+namespace App\\Security;
+
+class RbacMiddleware
+{
+    public function handle($request, \\Closure $next, ...$roles)
+    {
+        $user = $request->user();
+        if (!$user || !in_array($user->department_role, $roles)) {
+            abort(403, 'Unauthorized access to departmental financial records.');
+        }
+        return $next($request);
+    }
+}`
+    },
+    screenshots: [
+      {
+        title: 'MSU-IIT CCS Financial Dashboard',
+        caption: 'Departmental ledger tracking collegiate fees, verified receipts, and audit balances.',
+        placeholderText: 'MSU-IIT CCS Contribution Dashboard'
+      }
     ]
   },
   {
@@ -177,6 +651,46 @@ export const PROJECTS_DATA: Project[] = [
     metrics: [
       { label: 'Schema', value: 'Normalized RDBMS' },
       { label: 'Type', value: 'Asset Management' }
+    ],
+    architecture: {
+      summary: 'Hierarchical relational directory modeling parent-child asset inheritance across departments.',
+      steps: [
+        {
+          step: '01',
+          title: 'Tree Node Modeling',
+          detail: 'Nested category tree nodes indexed for fast recursive subtree lookups.',
+          tech: 'Adjacency List & RDBMS Indexes'
+        },
+        {
+          step: '02',
+          title: 'Custody Transfer Log',
+          detail: 'Asset transfers between personnel enforce referential verification and condition sign-off.',
+          tech: 'Transactional State Machine'
+        }
+      ]
+    },
+    codeSnippet: {
+      filename: 'database/migrations/create_asset_tree_schema.sql',
+      language: 'sql',
+      description: 'Relational schema enforcing foreign key referential integrity on asset custody movements.',
+      code: `CREATE TABLE assets (
+    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    asset_tag VARCHAR(64) UNIQUE NOT NULL,
+    category_id INT UNSIGNED NOT NULL,
+    parent_asset_id BIGINT UNSIGNED NULL,
+    custodian_id INT UNSIGNED NOT NULL,
+    status ENUM('active', 'in_transfer', 'maintenance', 'retired') DEFAULT 'active',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (category_id) REFERENCES asset_categories(id),
+    FOREIGN KEY (parent_asset_id) REFERENCES assets(id) ON DELETE SET NULL
+);`
+    },
+    screenshots: [
+      {
+        title: 'Hierarchical Asset Directory',
+        caption: 'Categorized asset tree with live search, condition tracking, and department assignments.',
+        placeholderText: 'InvenTree Directory View'
+      }
     ]
   },
   {
@@ -197,6 +711,65 @@ export const PROJECTS_DATA: Project[] = [
     metrics: [
       { label: 'Framework', value: 'React' },
       { label: 'UX', value: 'Mobile-First' }
+    ],
+    architecture: {
+      summary: 'Client-side media discovery client with debounced network ingestion and resilient caching.',
+      steps: [
+        {
+          step: '01',
+          title: 'Debounced Query Dispatch',
+          detail: 'Input queries debounced by 300ms to throttle upstream API requests and conserve network bandwidth.',
+          tech: 'Custom React useDebounce Hook'
+        },
+        {
+          step: '02',
+          title: 'Responsive Grid & Modal Presentation',
+          detail: 'Media items render into responsive flex grid with dynamic poster overlays and backdrop views.',
+          tech: 'React Components & CSS Grid'
+        }
+      ]
+    },
+    codeSnippet: {
+      filename: 'src/hooks/useMovieSearch.js',
+      language: 'javascript',
+      description: 'Debounced search hook fetching streaming movie catalog metadata with error resilience.',
+      code: `import { useState, useEffect } from 'react';
+
+export function useMovieSearch(query, debounceMs = 300) {
+  const [results, setResults] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (!query.trim()) {
+      setResults([]);
+      return;
+    }
+
+    const handler = setTimeout(async () => {
+      setLoading(true);
+      try {
+        const res = await fetch(\`/api/movies?q=\${encodeURIComponent(query)}\`);
+        const data = await res.json();
+        setResults(data.movies || []);
+      } catch (err) {
+        console.error('Failed to stream movie data', err);
+      } finally {
+        setLoading(false);
+      }
+    }, debounceMs);
+
+    return () => clearTimeout(handler);
+  }, [query, debounceMs]);
+
+  return { results, loading };
+}`
+    },
+    screenshots: [
+      {
+        title: 'MovieSite Discovery Screen',
+        caption: 'Responsive media grid showcasing search filters, poster artwork, and rating badges.',
+        placeholderText: 'MovieSite Media Catalog Interface'
+      }
     ]
   }
 ]

@@ -1,88 +1,94 @@
-import React, { useState } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import confetti from 'canvas-confetti'
-import { Send, CheckCircle2, AlertCircle, Copy, Check } from 'lucide-react'
-
-interface FormData {
-  name: string
-  email: string
-  subject: string
-  message: string
-}
-
-interface FormErrors {
-  name?: string
-  email?: string
-  subject?: string
-  message?: string
-}
+import { Send, CheckCircle2, AlertCircle, Copy, Check, ExternalLink } from 'lucide-react'
+import {
+  validateContactInput,
+  dispatchContactMessage,
+  type ContactPayload,
+  type ValidationErrors,
+} from '../../lib/contact'
 
 export const ContactForm: React.FC = () => {
-  const [formData, setFormData] = useState<FormData>({
+  const [formData, setFormData] = useState<ContactPayload>({
     name: '',
     email: '',
     subject: '',
     message: '',
+    hp_field: '',
   })
-  const [errors, setErrors] = useState<FormErrors>({})
+  const [errors, setErrors] = useState<ValidationErrors>({})
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
+  const [fallbackMailto, setFallbackMailto] = useState<string | null>(null)
   const [copied, setCopied] = useState(false)
 
+  const copyTimeoutRef = useRef<number | null>(null)
+  const abortControllerRef = useRef<AbortController | null>(null)
+
   const CONTACT_EMAIL = 'karlcabasagan.202200008@gmail.com'
+
+  useEffect(() => {
+    return () => {
+      if (copyTimeoutRef.current) window.clearTimeout(copyTimeoutRef.current)
+      if (abortControllerRef.current) abortControllerRef.current.abort()
+    }
+  }, [])
 
   const handleCopyEmail = () => {
     navigator.clipboard.writeText(CONTACT_EMAIL)
     setCopied(true)
-    setTimeout(() => setCopied(false), 2000)
+    if (copyTimeoutRef.current) window.clearTimeout(copyTimeoutRef.current)
+    copyTimeoutRef.current = window.setTimeout(() => setCopied(false), 2000)
   }
 
-  const validate = (): boolean => {
-    const errs: FormErrors = {}
-    if (!formData.name.trim()) errs.name = 'Please provide your name.'
-    if (!formData.email.trim()) {
-      errs.email = 'Please provide your email address.'
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      errs.email = 'Please enter a valid email address.'
-    }
-    if (!formData.subject.trim()) errs.subject = 'Please specify a subject.'
-    if (!formData.message.trim()) {
-      errs.message = 'Please enter your message.'
-    } else if (formData.message.trim().length < 10) {
-      errs.message = 'Message must be at least 10 characters long.'
-    }
-
-    setErrors(errs)
-    return Object.keys(errs).length === 0
-  }
-
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!validate()) return
-
+    const validation = validateContactInput(formData)
+    if (!validation.isValid) {
+      setErrors(validation.errors)
+      return
+    }
+    setErrors({})
     setIsSubmitting(true)
 
-    // Simulate reliable dispatch
-    setTimeout(() => {
+    abortControllerRef.current = new AbortController()
+
+    try {
+      const result = await dispatchContactMessage(
+        validation.sanitized,
+        CONTACT_EMAIL,
+        undefined,
+        abortControllerRef.current.signal
+      )
+
       setIsSubmitting(false)
       setIsSubmitted(true)
-      try {
+      if (result.usedFallbackMailto) {
+        setFallbackMailto(result.usedFallbackMailto)
+      }
+
+      // Lazy load confetti only on successful interaction
+      import('canvas-confetti').then((m) => {
+        const confetti = m.default
         confetti({
           particleCount: 80,
           spread: 70,
           origin: { y: 0.6 },
           colors: ['#00f5a0', '#00d2ff', '#8b5cf6'],
         })
-      } catch {
-        // Fallback if canvas is unavailable
-      }
-    }, 700)
+      }).catch(() => {
+        // Safe canvas fallback
+      })
+    } catch {
+      setIsSubmitting(false)
+    }
   }
 
   const handleReset = () => {
-    setFormData({ name: '', email: '', subject: '', message: '' })
+    setFormData({ name: '', email: '', subject: '', message: '', hp_field: '' })
     setErrors({})
     setIsSubmitted(false)
+    setFallbackMailto(null)
   }
 
   return (
@@ -152,19 +158,45 @@ export const ContactForm: React.FC = () => {
               <div className="w-14 h-14 rounded-2xl bg-accent-mint/15 text-accent-mint border border-accent-mint/40 flex items-center justify-center mx-auto">
                 <CheckCircle2 className="w-7 h-7" />
               </div>
-              <h3 className="text-xl font-bold text-white">Message Dispatched!</h3>
+              <h3 className="text-xl font-bold text-white">Message Ready / Dispatched!</h3>
               <p className="text-xs sm:text-sm text-slate-400 max-w-sm mx-auto leading-relaxed">
-                Thank you, <span className="text-white font-medium">{formData.name}</span>. Your message has been received. I will review and reply promptly.
+                Thank you, <span className="text-white font-medium">{formData.name}</span>. Your message has been prepared.
               </p>
-              <button
-                onClick={handleReset}
-                className="mt-4 px-5 py-2.5 rounded-xl bg-surface-muted hover:bg-surface text-xs font-semibold text-accent-mint border border-accent-mint/30 tap-scale hit-target transition-all"
-              >
-                Send Another Message
-              </button>
+              {fallbackMailto && (
+                <div className="pt-2">
+                  <a
+                    href={fallbackMailto}
+                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-accent-mint text-slate-950 text-xs font-semibold hover:bg-emerald-300 transition-all tap-scale hit-target"
+                  >
+                    <span>Send Directly via Email Client</span>
+                    <ExternalLink className="w-3.5 h-3.5" />
+                  </a>
+                </div>
+              )}
+              <div>
+                <button
+                  onClick={handleReset}
+                  className="mt-4 px-5 py-2.5 rounded-xl bg-surface-muted hover:bg-surface text-xs font-semibold text-accent-mint border border-accent-mint/30 tap-scale hit-target transition-all"
+                >
+                  Send Another Message
+                </button>
+              </div>
             </motion.div>
           ) : (
             <form onSubmit={handleSubmit} noValidate className="space-y-4">
+              {/* Spam Honeypot */}
+              <div className="hidden" aria-hidden="true">
+                <label htmlFor="hp_field">Do not fill this</label>
+                <input
+                  id="hp_field"
+                  type="text"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  value={formData.hp_field || ''}
+                  onChange={(e) => setFormData({ ...formData, hp_field: e.target.value })}
+                />
+              </div>
+
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {/* Name */}
                 <div>

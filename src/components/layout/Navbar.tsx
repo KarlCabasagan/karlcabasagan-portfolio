@@ -41,7 +41,7 @@ export const Navbar: React.FC = () => {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-200 ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-150 ${
         scrolled
           ? 'bg-[#090a0f]/90 backdrop-blur-md border-b border-white/[0.08] shadow-lg shadow-black/20'
           : 'bg-transparent'
@@ -114,7 +114,7 @@ export const Navbar: React.FC = () => {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Karl Cabasagan on GitHub"
-              className="flex items-center gap-2 px-3 py-2 text-xs font-medium text-slate-200 bg-surface/90 hover:bg-surface-muted border border-white/10 hover:border-accent-mint/40 rounded-xl transition-all tap-scale hit-target"
+              className="flex items-center gap-2 px-3 py-2 text-xs font-medium text-slate-200 bg-surface/90 hover:bg-surface-muted border border-white/10 hover:border-accent-mint/40 rounded-xl transition-colors duration-150 tap-scale hit-target"
             >
               <GithubIcon className="w-4 h-4 text-accent-mint" />
               <span className="hidden sm:inline font-mono">GitHub</span>
@@ -125,7 +125,7 @@ export const Navbar: React.FC = () => {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="John Karl Harley Cabasagan on LinkedIn"
-              className="flex items-center gap-2 px-3 py-2 text-xs font-medium text-slate-200 bg-surface/90 hover:bg-surface-muted border border-white/10 hover:border-[#0A66C2]/60 rounded-xl transition-all tap-scale hit-target"
+              className="flex items-center gap-2 px-3 py-2 text-xs font-medium text-slate-200 bg-surface/90 hover:bg-surface-muted border border-white/10 hover:border-[#0A66C2]/60 rounded-xl transition-colors duration-150 tap-scale hit-target"
             >
               <LinkedInIcon className="w-4 h-4 text-[#0A66C2]" />
               <span className="hidden sm:inline font-mono">LinkedIn</span>
@@ -162,7 +162,7 @@ export const Navbar: React.FC = () => {
                   <NavLink
                     key={item.path}
                     to={item.path}
-                    className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all min-h-[44px] ${
+                    className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-colors duration-150 min-h-[44px] ${
                       isActive
                         ? 'bg-accent-mint/15 text-accent-mint border border-accent-mint/30 font-semibold'
                         : 'text-slate-300 hover:bg-white/[0.04] hover:text-white'

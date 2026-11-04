@@ -115,7 +115,7 @@ export const ContactForm: React.FC = () => {
             </div>
             <button
               onClick={handleCopyEmail}
-              className="px-3 py-1.5 rounded-lg bg-white/[0.05] hover:bg-white/10 text-slate-300 hover:text-white text-xs font-mono flex items-center gap-1.5 tap-scale hit-target transition-all"
+              className="px-3 py-1.5 rounded-lg bg-white/[0.05] hover:bg-white/10 text-slate-300 hover:text-white text-xs font-mono flex items-center gap-1.5 tap-scale hit-target transition-colors duration-150"
               aria-label="Copy email address"
             >
               {copied ? (
@@ -166,7 +166,7 @@ export const ContactForm: React.FC = () => {
                 <div className="pt-2">
                   <a
                     href={fallbackMailto}
-                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-accent-mint text-slate-950 text-xs font-semibold hover:bg-emerald-300 transition-all tap-scale hit-target"
+                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-accent-mint text-slate-950 text-xs font-semibold hover:bg-emerald-300 transition-colors duration-150 tap-scale hit-target"
                   >
                     <span>Send Directly via Email Client</span>
                     <ExternalLink className="w-3.5 h-3.5" />
@@ -176,7 +176,7 @@ export const ContactForm: React.FC = () => {
               <div>
                 <button
                   onClick={handleReset}
-                  className="mt-4 px-5 py-2.5 rounded-xl bg-surface-muted hover:bg-surface text-xs font-semibold text-accent-mint border border-accent-mint/30 tap-scale hit-target transition-all"
+                  className="mt-4 px-5 py-2.5 rounded-xl bg-surface-muted hover:bg-surface text-xs font-semibold text-accent-mint border border-accent-mint/30 tap-scale hit-target transition-colors duration-150"
                 >
                   Send Another Message
                 </button>

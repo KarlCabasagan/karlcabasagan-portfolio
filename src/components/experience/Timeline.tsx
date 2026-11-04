@@ -42,7 +42,7 @@ export const Timeline: React.FC = () => {
             className="relative group"
           >
             {/* Timeline Dot */}
-            <div className="absolute -left-[31px] sm:-left-[39px] top-1.5 w-6 h-6 rounded-full bg-surface border-2 border-white/20 group-hover:border-accent-mint group-hover:scale-110 flex items-center justify-center transition-all">
+            <div className="absolute -left-[31px] sm:-left-[39px] top-1.5 w-6 h-6 rounded-full bg-surface border-2 border-white/20 group-hover:border-accent-mint group-hover:scale-110 flex items-center justify-center transition-transform duration-150 ease-out">
               <span className="w-2 h-2 rounded-full bg-accent-mint" />
             </div>
 

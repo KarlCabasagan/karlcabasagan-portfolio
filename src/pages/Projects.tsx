@@ -65,7 +65,7 @@ export const Projects: React.FC = () => {
                 role="tab"
                 aria-selected={isActive}
                 onClick={() => setSelectedCategory(cat)}
-                className={`relative px-3.5 sm:px-4 py-2 text-xs font-medium rounded-xl transition-all tap-scale hit-target min-h-[44px] focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-mint/80 ${
+                className={`relative px-3.5 sm:px-4 py-2 text-xs font-medium rounded-xl transition-colors duration-150 tap-scale hit-target min-h-[44px] focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-mint/80 ${
                   isActive
                     ? 'text-white font-semibold bg-white/10 border border-white/20'
                     : 'text-slate-400 hover:text-slate-200 hover:bg-white/[0.04]'

@@ -78,7 +78,7 @@ export const Hero: React.FC = () => {
 
             <Link
               to="/about"
-              className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-surface hover:bg-surface-muted text-slate-200 border border-white/10 hover:border-white/20 font-medium text-sm transition-all tap-scale min-h-[44px]"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-surface hover:bg-surface-muted text-slate-200 border border-white/10 hover:border-white/20 font-medium text-sm transition-colors duration-150 tap-scale min-h-[44px]"
             >
               <Sparkles className="w-4 h-4 text-accent-cyan" />
               <span>Skills Matrix</span>

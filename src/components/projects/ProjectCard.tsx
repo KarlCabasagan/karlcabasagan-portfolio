@@ -110,17 +110,17 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
       </div>
 
       {/* Card Footer Actions */}
-      <div className="px-5 sm:px-6 py-3.5 bg-surface-muted/50 border-t border-white/[0.06] flex items-center justify-between gap-3">
+      <div className="px-5 sm:px-6 py-3 bg-surface-muted/50 border-t border-white/[0.06] flex items-center justify-between gap-3">
         <a
           href={project.githubUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-1.5 text-xs text-slate-400 hover:text-white transition-colors tap-scale hit-target min-h-[44px] focus:outline-none focus-visible:underline"
+          className="inline-flex items-center gap-1.5 text-xs text-slate-300 hover:text-white transition-colors tap-scale hit-target min-h-[44px] focus:outline-none focus-visible:underline"
           aria-label={`View ${project.title} repository on GitHub`}
         >
           <GithubIcon className="w-3.5 h-3.5" />
-          <span className="font-mono text-[11px]">Repository</span>
-          <ArrowUpRight className="w-3 h-3 text-slate-500" />
+          <span className="font-mono text-[11px] tracking-wide">Repository</span>
+          <ArrowUpRight className="w-3 h-3 text-slate-400" />
         </a>
 
         <Link

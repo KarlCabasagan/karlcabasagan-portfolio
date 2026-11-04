@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react'
+import { computeParticleCount, debounce } from '../../lib/particles'
 
 interface Particle {
   x: number
@@ -20,14 +21,15 @@ export const AmbientBackground: React.FC = () => {
     if (!ctx) return
 
     let animationFrameId: number
+    let isRunning = true
     let width = (canvas.width = window.innerWidth)
     let height = (canvas.height = window.innerHeight)
 
-    const handleResize = () => {
+    const handleResize = debounce(() => {
       if (!canvas) return
       width = canvas.width = window.innerWidth
       height = canvas.height = window.innerHeight
-    }
+    }, 100)
 
     window.addEventListener('resize', handleResize)
 
@@ -39,7 +41,7 @@ export const AmbientBackground: React.FC = () => {
       }
     }
 
-    const particleCount = Math.min(Math.floor((width * height) / 22000), 55)
+    const particleCount = computeParticleCount(width, height)
     const particles: Particle[] = []
 
     for (let i = 0; i < particleCount; i++) {
@@ -63,10 +65,27 @@ export const AmbientBackground: React.FC = () => {
 
     window.addEventListener('mousemove', handleMouseMove, { passive: true })
 
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        cancelAnimationFrame(animationFrameId)
+        isRunning = false
+      } else if (!isRunning) {
+        isRunning = true
+        animationFrameId = requestAnimationFrame(render)
+      }
+    }
+
+    document.addEventListener('visibilitychange', handleVisibilityChange)
+
+    const MAX_DIST = 110
+    const MAX_DIST_SQ = MAX_DIST * MAX_DIST
+
     const render = () => {
+      if (!isRunning) return
+
       ctx.clearRect(0, 0, width, height)
 
-      // Draw subtle background radial gradient that tracks mouse gently
+      // Subtle radial gradient tracking cursor
       const gradient = ctx.createRadialGradient(
         mouseX > 0 ? mouseX : width / 2,
         mouseY > 0 ? mouseY : height / 3,
@@ -83,7 +102,8 @@ export const AmbientBackground: React.FC = () => {
       ctx.fillRect(0, 0, width, height)
 
       // Update and draw particles
-      for (let i = 0; i < particles.length; i++) {
+      const pLen = particles.length
+      for (let i = 0; i < pLen; i++) {
         const p = particles[i]
         p.x += p.vx
         p.y += p.vy
@@ -99,17 +119,16 @@ export const AmbientBackground: React.FC = () => {
         ctx.fillStyle = `rgba(0, 245, 160, ${p.baseAlpha})`
         ctx.fill()
 
-        // Connect nearby particles
-        for (let j = i + 1; j < particles.length; j++) {
+        // Connect nearby particles (cheaper squared distance check first)
+        for (let j = i + 1; j < pLen; j++) {
           const p2 = particles[j]
           const dx = p.x - p2.x
           const dy = p.y - p2.y
           const distSq = dx * dx + dy * dy
-          const maxDist = 120
 
-          if (distSq < maxDist * maxDist) {
+          if (distSq < MAX_DIST_SQ) {
             const dist = Math.sqrt(distSq)
-            const alpha = (1 - dist / maxDist) * 0.12
+            const alpha = (1 - dist / MAX_DIST) * 0.12
             ctx.beginPath()
             ctx.moveTo(p.x, p.y)
             ctx.lineTo(p2.x, p2.y)
@@ -126,8 +145,10 @@ export const AmbientBackground: React.FC = () => {
     render()
 
     return () => {
+      isRunning = false
       window.removeEventListener('resize', handleResize)
       window.removeEventListener('mousemove', handleMouseMove)
+      document.removeEventListener('visibilitychange', handleVisibilityChange)
       cancelAnimationFrame(animationFrameId)
     }
   }, [])

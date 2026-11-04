@@ -1,5 +1,4 @@
 import React from 'react'
-import { motion } from 'framer-motion'
 import { Layers, Database, ShieldCheck, Zap } from 'lucide-react'
 
 const STATS = [
@@ -33,14 +32,11 @@ export const QuickStats: React.FC = () => {
   return (
     <section className="py-8">
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        {STATS.map((stat, idx) => {
+        {STATS.map((stat) => {
           const Icon = stat.icon
           return (
-            <motion.div
+            <div
               key={stat.label}
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.2, delay: idx * 0.05 }}
               className="p-5 rounded-2xl bg-surface/70 border border-white/[0.08] hover:border-white/20 glass-surface-hover group"
             >
               <div className="flex items-center justify-between mb-3">
@@ -57,7 +53,7 @@ export const QuickStats: React.FC = () => {
               <p className="text-xs text-slate-400 leading-normal">
                 {stat.detail}
               </p>
-            </motion.div>
+            </div>
           )
         })}
       </div>

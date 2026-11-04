@@ -1,6 +1,5 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { motion } from 'framer-motion'
 import { ArrowRight, Terminal, Sparkles, FolderGit2, Download } from 'lucide-react'
 
 export const Hero: React.FC = () => {
@@ -16,12 +15,7 @@ export const Hero: React.FC = () => {
         {/* Left Col: Hero Pitch */}
         <div className="lg:col-span-7 flex flex-col items-start">
           {/* Status badge */}
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.2 }}
-            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-surface-muted/80 border border-white/10 text-xs text-slate-300 mb-6 backdrop-blur-sm"
-          >
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-surface-muted/80 border border-white/10 text-xs text-slate-300 mb-6 backdrop-blur-sm">
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent-mint opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-accent-mint"></span>
@@ -29,15 +23,10 @@ export const Hero: React.FC = () => {
             <span className="font-mono text-accent-mint font-medium">BSIT • Graduated Cum Laude (CGPA 1.32)</span>
             <span className="text-slate-500">•</span>
             <span>Full-Stack Developer & Lead Systems Architect</span>
-          </motion.div>
+          </div>
 
           {/* Main Title */}
-          <motion.h1
-            initial={{ opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.25, delay: 0.05 }}
-            className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-[1.1] mb-6"
-          >
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-[1.1] mb-6">
             Hi, I’m{' '}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent-mint via-teal-300 to-accent-cyan">
               Karl Cabasagan
@@ -46,27 +35,17 @@ export const Hero: React.FC = () => {
             <span className="block mt-2 text-2xl sm:text-3xl lg:text-4xl font-semibold text-slate-300">
               Architecting resilient backends & tactile interfaces.
             </span>
-          </motion.h1>
+          </h1>
 
           {/* Subtitle / Description capped at 65ch */}
-          <motion.p
-            initial={{ opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.25, delay: 0.1 }}
-            className="text-base sm:text-lg text-slate-400 leading-relaxed max-w-prose mb-8"
-          >
+          <p className="text-base sm:text-lg text-slate-400 leading-relaxed max-w-prose mb-8">
             Cum Laude BSIT graduate from St. Peter's College with proven leadership in full-stack web
             development, RESTful API architecture with Laravel, and interactive React applications.
             Lead Developer on collegiate platforms spanning agricultural optimization, dynamic QR verification, and academic evaluation systems.
-          </motion.p>
+          </p>
 
           {/* Action CTAs */}
-          <motion.div
-            initial={{ opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.25, delay: 0.15 }}
-            className="flex flex-wrap items-center gap-4 w-full sm:w-auto"
-          >
+          <div className="flex flex-wrap items-center gap-4 w-full sm:w-auto">
             <Link
               to="/projects"
               className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-accent-mint text-slate-950 font-semibold text-sm hover:bg-emerald-300 transition-colors tap-scale shadow-lg shadow-accent-mint/20 min-h-[44px]"
@@ -92,16 +71,11 @@ export const Hero: React.FC = () => {
               <Download className="w-4 h-4" />
               <span>Download CV</span>
             </a>
-          </motion.div>
+          </div>
         </div>
 
         {/* Right Col: Interactive Code / Terminal Card */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.96 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.3, delay: 0.12 }}
-          className="lg:col-span-5"
-        >
+        <div className="lg:col-span-5">
           <div className="rounded-2xl bg-surface border border-white/10 shadow-2xl overflow-hidden glass-surface">
             {/* Terminal Topbar */}
             <div className="flex items-center justify-between px-4 py-3 bg-surface-muted/90 border-b border-white/[0.08]">
@@ -187,7 +161,7 @@ export const Hero: React.FC = () => {
               </div>
             </div>
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   )

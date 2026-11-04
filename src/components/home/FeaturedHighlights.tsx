@@ -1,6 +1,5 @@
 import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { motion } from 'framer-motion'
 import { ArrowRight, Sparkles } from 'lucide-react'
 import { GithubIcon } from '../common/Icons'
 import { PROJECTS_DATA } from '../../data/projectsData'
@@ -32,11 +31,8 @@ export const FeaturedHighlights: React.FC = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {featured.map((project, idx) => (
-          <motion.div
+          <div
             key={project.id}
-            initial={{ opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.22, delay: idx * 0.06 }}
             onClick={(e) => {
               if ((e.target as HTMLElement).closest('a')) return
               navigate(`/projects/${project.id}`)
@@ -90,7 +86,7 @@ export const FeaturedHighlights: React.FC = () => {
                 <ArrowRight className="w-3.5 h-3.5" />
               </Link>
             </div>
-          </motion.div>
+          </div>
         ))}
       </div>
     </section>

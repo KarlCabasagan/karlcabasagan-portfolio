@@ -17,7 +17,9 @@ import {
 } from 'lucide-react'
 import { PageWrapper } from '../components/layout/PageWrapper'
 import { GithubIcon } from '../components/common/Icons'
+import { useRef } from 'react'
 import { PROJECTS_DATA, type Project } from '../data/projectsData'
+import { getProjectById, createSafeCloneCommand, sanitizeExternalUrl } from '../lib/security'
 
 export const ProjectDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>()
@@ -26,11 +28,13 @@ export const ProjectDetail: React.FC = () => {
   const [copiedCode, setCopiedCode] = useState<boolean>(false)
   const [copiedLink, setCopiedLink] = useState<boolean>(false)
 
-  // Find project by id
-  const projectIndex = PROJECTS_DATA.findIndex(
-    (p) => p.id.toLowerCase() === (id || '').toLowerCase()
-  )
-  const project: Project | undefined = projectIndex !== -1 ? PROJECTS_DATA[projectIndex] : undefined
+  const cloneTimerRef = useRef<number | null>(null)
+  const codeTimerRef = useRef<number | null>(null)
+  const shareTimerRef = useRef<number | null>(null)
+
+  // Find project by id safely
+  const project: Project | undefined = getProjectById(id)
+  const projectIndex = project ? PROJECTS_DATA.findIndex((p) => p.id === project.id) : -1
 
   const prevProject = projectIndex > 0 ? PROJECTS_DATA[projectIndex - 1] : null
   const nextProject =
@@ -38,18 +42,24 @@ export const ProjectDetail: React.FC = () => {
       ? PROJECTS_DATA[projectIndex + 1]
       : null
 
-  // Scroll to top on route change
+  // Scroll to top on route change and clear active timers on unmount
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'instant' })
+    return () => {
+      if (cloneTimerRef.current) window.clearTimeout(cloneTimerRef.current)
+      if (codeTimerRef.current) window.clearTimeout(codeTimerRef.current)
+      if (shareTimerRef.current) window.clearTimeout(shareTimerRef.current)
+    }
   }, [id])
 
   const handleCopyClone = useCallback(async () => {
-    if (!project?.githubUrl) return
-    const cloneCmd = `git clone ${project.githubUrl}.git`
+    const cloneCmd = createSafeCloneCommand(project?.githubUrl)
+    if (!cloneCmd) return
     try {
       await navigator.clipboard.writeText(cloneCmd)
       setCopiedClone(true)
-      setTimeout(() => setCopiedClone(false), 2000)
+      if (cloneTimerRef.current) window.clearTimeout(cloneTimerRef.current)
+      cloneTimerRef.current = window.setTimeout(() => setCopiedClone(false), 2000)
     } catch {
       // Fallback
     }
@@ -60,7 +70,8 @@ export const ProjectDetail: React.FC = () => {
     try {
       await navigator.clipboard.writeText(project.codeSnippet.code)
       setCopiedCode(true)
-      setTimeout(() => setCopiedCode(false), 2000)
+      if (codeTimerRef.current) window.clearTimeout(codeTimerRef.current)
+      codeTimerRef.current = window.setTimeout(() => setCopiedCode(false), 2000)
     } catch {
       // Fallback
     }
@@ -70,7 +81,8 @@ export const ProjectDetail: React.FC = () => {
     try {
       await navigator.clipboard.writeText(window.location.href)
       setCopiedLink(true)
-      setTimeout(() => setCopiedLink(false), 2000)
+      if (shareTimerRef.current) window.clearTimeout(shareTimerRef.current)
+      shareTimerRef.current = window.setTimeout(() => setCopiedLink(false), 2000)
     } catch {
       // Fallback
     }
@@ -167,20 +179,22 @@ export const ProjectDetail: React.FC = () => {
 
         {/* Action Toolbar */}
         <div className="flex flex-wrap items-center gap-3 pt-2">
-          <a
-            href={project.githubUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/[0.08] hover:bg-white/[0.14] border border-white/[0.12] text-white text-xs font-medium transition-all tap-scale hit-target min-h-[42px]"
-          >
-            <GithubIcon className="w-4 h-4" />
-            <span className="font-mono">GitHub Repository</span>
-            <ArrowUpRight className="w-3.5 h-3.5 text-slate-400" />
-          </a>
-
-          {project.demoUrl && project.demoUrl !== '#' && (
+          {sanitizeExternalUrl(project.githubUrl) && (
             <a
-              href={project.demoUrl}
+              href={sanitizeExternalUrl(project.githubUrl)!}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/[0.08] hover:bg-white/[0.14] border border-white/[0.12] text-white text-xs font-medium transition-all tap-scale hit-target min-h-[42px]"
+            >
+              <GithubIcon className="w-4 h-4" />
+              <span className="font-mono">GitHub Repository</span>
+              <ArrowUpRight className="w-3.5 h-3.5 text-slate-400" />
+            </a>
+          )}
+
+          {sanitizeExternalUrl(project.demoUrl) && project.demoUrl !== '#' && (
+            <a
+              href={sanitizeExternalUrl(project.demoUrl)!}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-accent-mint/15 hover:bg-accent-mint/25 border border-accent-mint/40 text-accent-mint text-xs font-medium transition-all tap-scale hit-target min-h-[42px]"

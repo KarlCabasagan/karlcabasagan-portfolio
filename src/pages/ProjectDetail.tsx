@@ -103,7 +103,7 @@ export const ProjectDetail: React.FC = () => {
           </div>
           <Link
             to="/projects"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-accent-mint/15 border border-accent-mint/40 text-accent-mint text-xs font-semibold hover:bg-accent-mint/25 transition-all tap-scale hit-target"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-accent-mint/15 border border-accent-mint/40 text-accent-mint text-xs font-semibold hover:bg-accent-mint/25 transition-colors duration-150 tap-scale hit-target"
           >
             <ArrowLeft className="w-4 h-4" />
             <span>Return to Portfolio Directory</span>
@@ -184,7 +184,7 @@ export const ProjectDetail: React.FC = () => {
               href={sanitizeExternalUrl(project.githubUrl)!}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/[0.08] hover:bg-white/[0.14] border border-white/[0.12] text-white text-xs font-medium transition-all tap-scale hit-target min-h-[42px]"
+              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/[0.08] hover:bg-white/[0.14] border border-white/[0.12] text-white text-xs font-medium transition-colors duration-150 tap-scale hit-target min-h-[42px]"
             >
               <GithubIcon className="w-4 h-4" />
               <span className="font-mono">GitHub Repository</span>
@@ -197,7 +197,7 @@ export const ProjectDetail: React.FC = () => {
               href={sanitizeExternalUrl(project.demoUrl)!}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-accent-mint/15 hover:bg-accent-mint/25 border border-accent-mint/40 text-accent-mint text-xs font-medium transition-all tap-scale hit-target min-h-[42px]"
+              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-accent-mint/15 hover:bg-accent-mint/25 border border-accent-mint/40 text-accent-mint text-xs font-medium transition-colors duration-150 tap-scale hit-target min-h-[42px]"
             >
               <ExternalLink className="w-4 h-4" />
               <span>Live Demonstration</span>
@@ -206,7 +206,7 @@ export const ProjectDetail: React.FC = () => {
 
           <button
             onClick={handleCopyClone}
-            className="inline-flex items-center gap-2 px-3.5 py-2.5 rounded-xl bg-surface-muted/80 hover:bg-surface-muted border border-white/[0.08] hover:border-white/20 text-xs text-slate-300 transition-all tap-scale hit-target min-h-[42px]"
+            className="inline-flex items-center gap-2 px-3.5 py-2.5 rounded-xl bg-surface-muted/80 hover:bg-surface-muted border border-white/[0.08] hover:border-white/20 text-xs text-slate-300 transition-colors duration-150 tap-scale hit-target min-h-[42px]"
             title="Copy git clone command"
           >
             <Terminal className="w-3.5 h-3.5 text-accent-mint" />
@@ -317,7 +317,7 @@ export const ProjectDetail: React.FC = () => {
                 </span>
                 <button
                   onClick={handleCopyCode}
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-surface-muted hover:bg-surface border border-white/[0.1] text-xs font-mono text-slate-300 hover:text-white transition-all tap-scale hit-target min-h-[36px]"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-surface-muted hover:bg-surface border border-white/[0.1] text-xs font-mono text-slate-300 hover:text-white transition-colors duration-150 tap-scale hit-target min-h-[36px]"
                 >
                   {copiedCode ? (
                     <>
@@ -439,7 +439,7 @@ export const ProjectDetail: React.FC = () => {
           {prevProject ? (
             <Link
               to={`/projects/${prevProject.id}`}
-              className="p-5 rounded-2xl bg-surface/60 hover:bg-surface/90 border border-white/[0.08] hover:border-accent-mint/40 transition-all flex flex-col justify-between group tap-scale hit-target"
+              className="p-5 rounded-2xl bg-surface/60 hover:bg-surface/90 border border-white/[0.08] hover:border-accent-mint/40 transition-colors duration-150 flex flex-col justify-between group tap-scale hit-target"
             >
               <div className="flex items-center gap-2 text-xs font-mono text-slate-400 mb-2">
                 <ArrowLeft className="w-3.5 h-3.5 group-hover:-translate-x-1 transition-transform" />
@@ -458,7 +458,7 @@ export const ProjectDetail: React.FC = () => {
           {nextProject ? (
             <Link
               to={`/projects/${nextProject.id}`}
-              className="p-5 rounded-2xl bg-surface/60 hover:bg-surface/90 border border-white/[0.08] hover:border-accent-mint/40 transition-all flex flex-col justify-between text-right group tap-scale hit-target"
+              className="p-5 rounded-2xl bg-surface/60 hover:bg-surface/90 border border-white/[0.08] hover:border-accent-mint/40 transition-colors duration-150 flex flex-col justify-between text-right group tap-scale hit-target"
             >
               <div className="flex items-center justify-end gap-2 text-xs font-mono text-slate-400 mb-2">
                 <span className="uppercase tracking-wider">Next Project</span>

@@ -52,12 +52,29 @@
   }
 
   .glass-surface-hover {
-    transition: all 200ms cubic-bezier(0.16, 1, 0.3, 1);
+    transition-property: background-color, border-color, box-shadow;
+    transition-duration: 180ms;
+    transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
   }
   .glass-surface-hover:hover {
     background: rgba(24, 27, 36, 0.85);
     border-color: rgba(255, 255, 255, 0.16);
     box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+  }
+
+  /* Emil Kowalski: prefers-reduced-motion guardrail */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+    .tap-scale:active {
+      transform: none !important;
+    }
   }
 
   /* Gradient text */

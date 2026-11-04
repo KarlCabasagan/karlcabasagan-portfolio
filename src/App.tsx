@@ -25,7 +25,7 @@ export const App: React.FC = () => {
   const location = useLocation()
 
   return (
-    <div className="min-h-screen flex flex-col relative text-slate-100 selection:bg-accent-mint/20 selection:text-accent-mint font-sans">
+    <div className="min-h-screen flex flex-col relative text-slate-100 selection:bg-accent-mint/20 selection:text-accent-mint font-sans overflow-x-hidden w-full max-w-full">
       <ScrollToTop />
       <AmbientBackground />
       <Navbar />

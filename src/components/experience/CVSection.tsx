@@ -87,11 +87,11 @@ export const CVSection: React.FC = () => {
               <ExternalLink className="w-3 h-3" />
             </a>
           </div>
-          <div className="w-full h-[500px] rounded-xl overflow-hidden border border-white/10 bg-slate-900">
+          <div className="w-full max-w-full h-[500px] rounded-xl overflow-hidden border border-white/10 bg-slate-900">
             <iframe
               src="/Karl_Cabasagan_CV.pdf#toolbar=0"
               title="Karl Cabasagan CV Preview"
-              className="w-full h-full"
+              className="w-full h-full border-0"
             />
           </div>
         </motion.div>

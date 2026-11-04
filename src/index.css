@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+html,
+body {
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100vw;
+}
+
 @layer base {
   :root {
     color-scheme: dark;
@@ -15,6 +22,8 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     overflow-x: hidden;
+    width: 100%;
+    position: relative;
   }
 
   /* Emil Kowalski rule: tabular numbers for counts, metrics, dates */

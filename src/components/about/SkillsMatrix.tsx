@@ -65,7 +65,7 @@ export const SkillsMatrix: React.FC = () => {
         </div>
 
         {/* Search Input */}
-        <div className="relative min-w-[240px]">
+        <div className="relative w-full md:w-auto md:min-w-[240px]">
           <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
           <input
             type="text"

@@ -85,7 +85,7 @@ export const Projects: React.FC = () => {
         </div>
 
         {/* Search Input */}
-        <div className="relative min-w-[240px]">
+        <div className="relative w-full md:w-auto md:min-w-[240px]">
           <label htmlFor="project-search" className="sr-only">
             Search projects or tags
           </label>
